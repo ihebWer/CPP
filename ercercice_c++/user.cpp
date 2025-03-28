@@ -48,4 +48,12 @@ User &User::get(int id) {
         std::cerr << "Error: Unable to open file for reading!" << std::endl;
     }
     return user;
+    // static fait que user est partagé entre les appels
+    // et n'est pas détruit à la fin de la fonction
+    // à chaque appel, c'est le même bloc mémoire qui est utilisé,
+    // ainsi, on peut get n'importe quel id (même si pas dans le fichier),
+    // et modifier un utilisateur en y accedant avec un autre id (cf main)
+    // Pour éviter ça, il faut allouer la mémoire dynamiquement avec new (équivalent à malloc),
+    // ou utiliser un std::unique_ptr pour gérer la mémoire automatiquement.
+    // Une autre solution serait de stocker les utilisateurs dans une map ou un vecteur.
 }
